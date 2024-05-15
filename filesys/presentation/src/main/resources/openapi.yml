@@ -1,0 +1,48 @@
+openapi: 3.0.0
+info:
+  title: FileSys API
+  version: 1.0.0
+  description: Presentation layer for file system app using OpenAPI 3.0
+
+
+paths:
+  /files:
+    get:
+      summary: Get all files
+      operationId: getAllFiles
+      responses:
+        '200':
+          description: A list of files
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FileResponse'
+
+components:
+  schemas:
+
+    FileResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        binary:
+          type: array
+          items:
+            type: string
+            format: byte
+        item:
+          $ref: '#/components/schemas/Item'
+
+
+    Item:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string

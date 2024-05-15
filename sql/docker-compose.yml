@@ -1,0 +1,16 @@
+services:
+
+  test-db:
+    image: postgres
+    container_name: test-db
+    environment:
+      POSTGRES_USER: test-root
+      POSTGRES_PASSWORD: P@ssw0rd
+      POSTGRES_DB: test-db
+    ports:
+      - "5432:5432"
+    volumes:
+      - test-db:/var/lib/postgresql/data
+
+volumes:
+  test-db:
