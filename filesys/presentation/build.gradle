@@ -1,51 +1,13 @@
-import org.openapitools.generator.gradle.plugin.tasks.GenerateTask
-import org.openapitools.generator.gradle.plugin.tasks.ValidateTask
-
-plugins {
-    id 'org.openapi.generator' version '7.5.0'
-}
-
 dependencies {
     implementation project(':infrastructure')
     implementation project(':application')
 
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.openapitools:openapi-generator:7.5.0'
-    implementation 'org.openapitools:openapi-generator-gradle-plugin:7.5.0'
-    implementation 'org.openapitools:jackson-databind-nullable:0.2.1'
-    implementation 'org.springdoc:springdoc-openapi-ui:1.7.0'
-
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
-
-openApiGenerate {
-    generatorName = 'spring'
-    inputSpec = "$rootDir/presentation/src/main/resources/openapi.yml"
-    apiPackage = 'com.stc.presentation.api'
-    modelPackage = 'com.stc.presentation.api.model'
-    supportingFilesConstrainedTo = [
-            'ApiUtil.java',
-    ]
-    configOptions = [
-            library      : 'spring-boot',
-            useTags      : 'true',
-            interfaceOnly: 'true'
-    ]
-}
-
-compileJava.dependsOn tasks.openApiGenerate
-
-openApiValidate {
-    inputSpec.set("$rootDir/presentation/src/main/resources/openapi.yml")
-}
-
-tasks.withType(GenerateTask).configureEach {
-    outputs.upToDateWhen { false }
-    outputs.cacheIf { false }
-}
 
 tasks.named('test') {
     useJUnitPlatform()
