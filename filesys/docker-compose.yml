@@ -1,0 +1,33 @@
+services:
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: filesys-backend
+    ports:
+      - "8080:8080"
+    depends_on:
+      - filesys-db
+    environment:
+      DATABASE_URL: postgresql://filesys-db:5432/filesys-db
+      DATABASE_NAME: filesys-db
+      DATABASE_USER: root
+      DATABASE_PASSWORD: P@ssw0rd
+
+
+  filesys-db:
+    image: postgres
+    container_name: filesys-db
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: P@ssw0rd
+      POSTGRES_DB: filesys-db
+    ports:
+      - "5432:5432"
+    volumes:
+      - filesys-db:/var/lib/postgresql/data
+
+
+volumes:
+  filesys-db:
